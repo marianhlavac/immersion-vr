@@ -7,6 +7,7 @@ public class AppManager : MonoBehaviour {
     AppManager instance;
 
     void Awake() {
+        // Act as singleton
         if (instance != this) {
             instance = this;
         } else {
@@ -14,11 +15,7 @@ public class AppManager : MonoBehaviour {
             instance = this;
         }
 
-        string ownedGames = SteamAPI.getOwnedGames(delegate (string result) {
-            print(result);
-        });
-
-        print(ownedGames);
+        SteamAPI.getOwnedGames();
     }
 	
 }
