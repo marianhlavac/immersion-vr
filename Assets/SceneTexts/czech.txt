@@ -1,0 +1,40 @@
+#intro
+0;2.5;0;Vítejte v herně Virtualnirealita.cz.
+0;3.2;0;Tato krátká výuka vás provede vstupem do virtuální reality.
+
+#skippable
+0.5;6.9;1;Pokud s virtuální realitou již máte zkušenosti a výuku\nchcete přeskočit, stiskněte kombinaci tlačítek menu a spouště.
+
+#playarea1
+2;2;2;Rozhlédněte se kolem sebe a na podlahu. 
+0;7.5;2;Ohraničení, které můžete vidět na zemi je místo, ve kterém se můžete\nvolně pohybovat v průběhu svých zážitků ve virtuální realitě.
+
+#playarea2
+0;4;3;Toto ohraničení však není vidět vždy, proto se zobrazuje pomocná mřížka,\nkterá vás na tyto hranice upozorní, pokud se je pokusíte překročit. 
+0;5;3;Nyní se zkuste pomalu k hranici přiblížit, abyste si vyzkoušeli,\njak to funguje. Za tuto hranici dále nechoďte.
+
+#playarea3
+0;7;4;Až dokončíte prozkoumávání ohraničení, vraťte se doprostřed\nmístnosti a zvedněte obě ruce před sebe.
+0;3;4;Povíme si něco více k ovladačům.
+
+#controllers1
+0;6;5;Toto jsou ovladače systému HTC Vive.\nNyní vám představíme všechna tlačítka, která se na ovladači nacházejí. 
+0;3.5;5;Budou zvýrazněny a vy se na ně tak můžete podívat.
+
+#controllers2
+0;3;6;Toto je tlačítko spouště.
+0;7;6;Slouží ve hrách většinou jako tlačítko pro výstřel, nebo výběr položky v menu.
+0;4;6;Namiřte laserové ukazovátko na terč a stiskněte spoušť.
+
+#controllers3
+0;4;7;Skvělé. Toto je boční tlačítko, které lze stisknout z libovolné strany.
+0;6;7;Slouží jako alternativní funkce, například pro přebíjení zbraně. Stiskněte jej.
+
+#controllers4
+0;3;8;Výborně. Toto je dotyková část ovladače. Můžete po ní přejíždět prstem nebo ji i stisknout. Přejížděním prstu vyberte barvu a stisknutím dotykové plochy vyberte barvu svého laserového ukazovátka.
+
+#controllers5
+0;3;9;Dobře. Zbývají nám dvě tlačítka. Menu tlačítko a systémové tlačítko. Menu tlačítko slouží většinou k vyvolání nabídky ve hře, kterou můžete používat pro pozastavení hry, nebo jiné činnosti. Systémové tlačítko pak otevírá nástěnku systému Steam. Pokud jste s platformou Steam seznámeni, můžete toto tlačítko používat pro navigaci platformou a výběru jiných VR aplikací. Stejným tlačítkem tuto nástěnku i můžete zavřít.
+
+#outro
+0;3;10;Nyní jste připraveni spustit svůj první zážitek ve virtuální realitě. Před sebou vidíte knihovnu dostupných aplikací naší herny. Vyberte si, o který zážitek máte zájem, namiřte na něj a stiskněte spoušť.
