@@ -42,6 +42,9 @@ public class TutorialManager : MonoBehaviour {
     }
 	
 	void Update () {
+        if (Input.GetKeyDown(KeyCode.F1)) {
+            ExitTutorial();
+        }
 	}
 
     public void StartTutorial() {
@@ -53,7 +56,13 @@ public class TutorialManager : MonoBehaviour {
         }
     }
 
-    public void PlayCue(SubtitleCue cue) {
+    public void ExitTutorial() {
+        foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Tutorial")) {
+            Destroy(obj);
+        }
+    }
+
+    private void PlayCue(SubtitleCue cue) {
         DisplayCue(cue.text);
 
         if (currentAudioCue != cue.audioCueIdx) {
@@ -61,14 +70,14 @@ public class TutorialManager : MonoBehaviour {
         }
     }
 
-    public void DisplayCue(string text) {
+    private void DisplayCue(string text) {
         TextMesh subtitleText = subtitlesObject.GetComponentInChildren<TextMesh>();
         GameObject subtitleBackground = subtitlesObject.transform.FindChild("Background").gameObject;
 
         subtitleText.text = text;
     }
 
-    void PlayAudioCue (int id) {
+    private void PlayAudioCue (int id) {
         AudioSource source = GetComponent<AudioSource>();
 
         if (id < 0 || id >= audioCues.Length) {

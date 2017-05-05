@@ -1,0 +1,42 @@
+fileFormatVersion: 2
+guid: 4cadfb0d702e5cf44bf0e80388264e23
+timeCreated: 1493977421
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Mesmerize
+  fontNames:
+  - Mesmerize
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 29973fc00fe35d2409b8c7cabf853569, type: 3}
+  - {fileID: 12800000, guid: 15b238110f85b5049b5ff5613dd869ad, type: 3}
+  - {fileID: 12800000, guid: 2cf2c0311c3dc9d41ae5af66f1a5568b, type: 3}
+  - {fileID: 12800000, guid: 4b8742c1062121e41a89122fa60b749b, type: 3}
+  - {fileID: 12800000, guid: 1407d7b214cb9094d83fb59528969134, type: 3}
+  - {fileID: 12800000, guid: 138a17d29c6aec149a24b4752bce3eee, type: 3}
+  - {fileID: 12800000, guid: 2b617103224611d4c974dc020e6f4d32, type: 3}
+  - {fileID: 12800000, guid: 0dea39559129c994b8afcb57b2fca568, type: 3}
+  - {fileID: 12800000, guid: 078c6507c7eba5a469d0ef22b16eb04c, type: 3}
+  - {fileID: 12800000, guid: 1a27498830e683e4da7a0e09c9e483bb, type: 3}
+  - {fileID: 12800000, guid: 3c31d199f8791db4fafd93777a1d627e, type: 3}
+  - {fileID: 12800000, guid: 2b854afbedb469846af959daaa3670da, type: 3}
+  - {fileID: 12800000, guid: 01c7114d9432c7f488bcb6226505d64d, type: 3}
+  - {fileID: 12800000, guid: 389987cd967ab2f469482f1d579c99e1, type: 3}
+  - {fileID: 12800000, guid: 1d8ea3dd5448ef346be4689c01f52780, type: 3}
+  - {fileID: 12800000, guid: 3459afedcd8d0e44fbd2c159df3cabcf, type: 3}
+  - {fileID: 12800000, guid: 1f4f890e0f83a2d43953fdf8fc8db18f, type: 3}
+  - {fileID: 12800000, guid: 01fbb76ebccff9f4ca826999f25bca7a, type: 3}
+  - {fileID: 12800000, guid: 06b3ddbe5978bfa44af7c190242662ac, type: 3}
+  - {fileID: 12800000, guid: 34de8bfe71eebeb43a2c6b43ba3a40ee, type: 3}
+  - {fileID: 12800000, guid: 395e23df3f057d0418025b0f392bd8c0, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

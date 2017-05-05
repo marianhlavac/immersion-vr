@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 01c7114d9432c7f488bcb6226505d64d
+timeCreated: 1493977419
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Mesmerize
+  fontNames:
+  - Mesmerize
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
