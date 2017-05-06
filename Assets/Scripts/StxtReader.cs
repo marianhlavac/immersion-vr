@@ -10,7 +10,7 @@ public class StxtReadError : Exception {
 }
 
 public class StxtReader {
-    public static SubtitleCue[] ReadFromFile(string filename) {
+    public static ScenarioCue[] ReadFromFile(string filename) {
         string data;
 
         try {
@@ -23,8 +23,8 @@ public class StxtReader {
         return ReadFromString(data);
     }
 
-    public static SubtitleCue[] ReadFromString(string data) {
-        List<SubtitleCue> cues = new List<SubtitleCue>();
+    public static ScenarioCue[] ReadFromString(string data) {
+        List<ScenarioCue> cues = new List<ScenarioCue>();
         string[] lines = Regex.Split(data, "\r\n|\r|\n");
 
         StxtReadState state = StxtReadState.Root;
@@ -45,7 +45,11 @@ public class StxtReader {
             else {
                 // Parse cue
                 if (line.Length > 0) {
-                    cues.Add(ParseCue(line, cueGroup));
+                    try {
+                        cues.Add(ParseCue(line, cueGroup));
+                    } catch (ScenarioCueActionNotFoundException) {
+                        throw new StxtReadError("Error while reading stxt: Non-existent cue action.");
+                    }
                     state = StxtReadState.CueLineNext;
                 }
             }
@@ -53,7 +57,7 @@ public class StxtReader {
 
         // Calculate the absolute offsets
         float offset = 0;
-        foreach (SubtitleCue cue in cues) {
+        foreach (ScenarioCue cue in cues) {
             cue.absoluteOffset = offset;
             offset += cue.offset + cue.length;
         }
@@ -61,20 +65,33 @@ public class StxtReader {
         return cues.ToArray();
     }
 
-    private static SubtitleCue ParseCue(string line, string activeGroup) {
-        string[] parts = line.Split(';');
+    private static ScenarioCue ParseCue(string line, string activeGroup) {
+        string[] parts = line.Split(':');
+        string[] parameters = parts[0].Split(';');
 
-        if (parts.Length != 4) {
+        if (parts.Length != 2 || parameters.Length != 3) {
             throw new StxtReadError("Syntax error while reading stxt.");
         }
 
-        return new SubtitleCue(
-            parts[3],
-            activeGroup,
-            Convert.ToSingle(parts[0]),
-            0f,
-            Convert.ToSingle(parts[1]),
-            Convert.ToUInt32(parts[2])
-        );
+        if (parts[1].StartsWith("%")) {
+            return new ScenarioCue(
+                ScenarioCue.ActionFromString(parts[1].Substring(1)),
+                activeGroup,
+                Convert.ToSingle(parameters[0]),
+                0f,
+                Convert.ToSingle(parameters[1]),
+                Convert.ToUInt32(parameters[2])
+            );
+        } else {
+            return new ScenarioCue(
+                parts[1],
+                activeGroup,
+                Convert.ToSingle(parameters[0]),
+                0f,
+                Convert.ToSingle(parameters[1]),
+                Convert.ToUInt32(parameters[2])
+            );
+        }
+        
     }
 }

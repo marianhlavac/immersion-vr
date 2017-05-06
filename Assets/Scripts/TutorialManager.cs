@@ -23,9 +23,10 @@ public class TutorialManager : MonoBehaviour {
     public TextAsset subtitleTextFile = null;
 
     public GameObject subtitlesObject;
+    public GameObject laserPointerPrefab;
 
     private TutorialPhase phase;
-    private SubtitleCue[] subtitleCues;
+    private ScenarioCue[] subtitleCues;
     private int cuePosition = -1;
     private int currentAudioCue = -1;
     
@@ -49,8 +50,7 @@ public class TutorialManager : MonoBehaviour {
 
     public void StartTutorial() {
         PlayCue(subtitleCues[++cuePosition]);
-
-        if (cuePosition < subtitleCues.Length) {
+        if (cuePosition < subtitleCues.Length - 1) {
             float timeToNextCue = subtitleCues[cuePosition].length + subtitleCues[cuePosition + 1].offset;
             Invoke("StartTutorial", timeToNextCue);
         }
@@ -62,11 +62,15 @@ public class TutorialManager : MonoBehaviour {
         }
     }
 
-    private void PlayCue(SubtitleCue cue) {
-        DisplayCue(cue.text);
+    private void PlayCue(ScenarioCue cue) {
+        if (cue.isAction) {
+            InvokeCueAction(cue.action);
+        } else {
+            DisplayCue("[" + cue.absoluteOffset.ToString() + "] " + cue.text);
 
-        if (currentAudioCue != cue.audioCueIdx) {
-            PlayAudioCue((int)cue.audioCueIdx);
+            if (currentAudioCue != cue.audioCueIdx) {
+                PlayAudioCue((int)cue.audioCueIdx);
+            }
         }
     }
 
@@ -87,5 +91,50 @@ public class TutorialManager : MonoBehaviour {
         source.clip = audioCues[id];
         source.Play();
         currentAudioCue = id;
+    }
+
+    /**
+     * Invokes a specified cue action.
+     */
+    private void InvokeCueAction (ScenarioCueAction action) {
+        Debug.Log("Invoking action " + action.ToString());
+
+        switch (action) {
+            // Gives a laser pointer to the user.
+            case ScenarioCueAction.GiveLaser:
+                GameObject rightController = GameObject.Find("Controller (right)");
+                GameObject laserPointer = Instantiate<GameObject>(laserPointerPrefab);
+                laserPointer.transform.parent = rightController.transform;
+                break;
+
+            // Ends the tutorial and goes to the launcher library.
+            case ScenarioCueAction.GotoLibrary:
+                ExitTutorial();
+                break;
+
+            // Shows arcade logo
+            case ScenarioCueAction.ShowLogo:
+                FadeInFadeOut logoFader = GameObject.Find("ArcadeLogo").GetComponent<FadeInFadeOut>();
+                logoFader.Show();
+                break;
+
+            // Hides the arcade logo
+            case ScenarioCueAction.HideLogo:
+                FadeInFadeOut logoFaderB = GameObject.Find("ArcadeLogo").GetComponent<FadeInFadeOut>();
+                logoFaderB.Hide();
+                break;
+
+            // Shows skip text
+            case ScenarioCueAction.ShowSkipTxt:
+                FadeInFadeOut stFader = GameObject.Find("SkippableText").GetComponent<FadeInFadeOut>();
+                stFader.Show();
+                break;
+
+            // Hides the skip text
+            case ScenarioCueAction.HideSkipTxt:
+                FadeInFadeOut stFaderB = GameObject.Find("SkippableText").GetComponent<FadeInFadeOut>();
+                stFaderB.Hide();
+                break;
+        }
     }
 }
