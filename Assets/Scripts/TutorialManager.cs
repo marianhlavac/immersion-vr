@@ -26,6 +26,7 @@ public class TutorialManager : MonoBehaviour {
     public GameObject subtitlesObject;
     public GameObject laserPointerPrefab;
     public GameObject launcherRigPrefab;
+    public GameObject targetPrefab;
 
     private TutorialPhase phase;
     private ScenarioCue[] subtitleCues;
@@ -37,6 +38,7 @@ public class TutorialManager : MonoBehaviour {
     private GameObject leftController;
     private GameObject rightController;
     private GameObject head;
+    private GameObject rig;
 
     void Start () {
         phase = startingPhase;
@@ -45,6 +47,8 @@ public class TutorialManager : MonoBehaviour {
         leftController = vrRig.transform.Find("LeftController").gameObject;
         rightController = vrRig.transform.Find("RightController").gameObject;
         head = vrRig.transform.Find("Camera (eye)").gameObject;
+
+        rig = GameObject.Find("TutorialRig");
 
         if (subtitleTextFile == null) {
             throw new Exception("Subtitle Text File hasn't been specified.");
@@ -171,6 +175,10 @@ public class TutorialManager : MonoBehaviour {
             case ScenarioCueAction.GiveLaser:
                 GameObject laserPointer = Instantiate<GameObject>(laserPointerPrefab);
                 laserPointer.transform.parent = rightController.transform;
+
+
+                GameObject target = Instantiate<GameObject>(targetPrefab);
+                target.transform.parent = rig.transform;
                 break;
         }
     }
