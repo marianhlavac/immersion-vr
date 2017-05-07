@@ -25,6 +25,7 @@ public class TutorialManager : MonoBehaviour {
 
     public GameObject subtitlesObject;
     public GameObject laserPointerPrefab;
+    public GameObject launcherRigPrefab;
 
     private TutorialPhase phase;
     private ScenarioCue[] subtitleCues;
@@ -43,7 +44,7 @@ public class TutorialManager : MonoBehaviour {
         GameObject vrRig = GameObject.Find("SteamVRRig");
         leftController = vrRig.transform.Find("LeftController").gameObject;
         rightController = vrRig.transform.Find("RightController").gameObject;
-        head = vrRig.transform.Find("HeadCamera").gameObject;
+        head = vrRig.transform.Find("Camera (eye)").gameObject;
 
         if (subtitleTextFile == null) {
             throw new Exception("Subtitle Text File hasn't been specified.");
@@ -135,7 +136,7 @@ public class TutorialManager : MonoBehaviour {
         switch (action) {
             // Ends the tutorial and goes to the launcher library.
             case ScenarioCueAction.GotoLibrary:
-                ExitTutorial();
+                Instantiate(launcherRigPrefab);
                 break;
 
             // Shows arcade logo
