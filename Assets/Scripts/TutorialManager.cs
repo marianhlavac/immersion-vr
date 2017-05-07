@@ -21,6 +21,7 @@ public class TutorialManager : MonoBehaviour {
     public TutorialPhase startingPhase;
     public AudioClip[] audioCues;
     public TextAsset subtitleTextFile = null;
+    public float raiseThreshold = 0.75f;
 
     public GameObject subtitlesObject;
     public GameObject laserPointerPrefab;
@@ -29,17 +30,27 @@ public class TutorialManager : MonoBehaviour {
     private ScenarioCue[] subtitleCues;
     private int cuePosition = -1;
     private int currentAudioCue = -1;
-    
+    private Func<bool> pauseUntil = null;
+    private bool tutorialRunning = false;
+    private float nextCueTime = 0;
+    private GameObject leftController;
+    private GameObject rightController;
+    private GameObject head;
+
     void Start () {
         phase = startingPhase;
+
+        GameObject vrRig = GameObject.Find("SteamVRRig");
+        leftController = vrRig.transform.Find("LeftController").gameObject;
+        rightController = vrRig.transform.Find("RightController").gameObject;
+        head = vrRig.transform.Find("HeadCamera").gameObject;
 
         if (subtitleTextFile == null) {
             throw new Exception("Subtitle Text File hasn't been specified.");
         }
 
         subtitleCues = StxtReader.ReadFromString(subtitleTextFile.text);
-
-        StartTutorial();
+        tutorialRunning = true;
 
         // Skip tutorial by command args
         string[] args = System.Environment.GetCommandLineArgs();
@@ -56,13 +67,25 @@ public class TutorialManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.F1)) {
             ExitTutorial();
         }
+
+        if (pauseUntil != null) {
+            if (pauseUntil()) {
+                pauseUntil = null;
+            }
+        }
+
+        if (tutorialRunning && nextCueTime <= Time.time && pauseUntil == null) {
+            AdvanceTutorial();
+        }
 	}
 
-    public void StartTutorial() {
+    public void AdvanceTutorial() {
         PlayCue(subtitleCues[++cuePosition]);
+
         if (cuePosition < subtitleCues.Length - 1) {
-            float timeToNextCue = subtitleCues[cuePosition].length + subtitleCues[cuePosition + 1].offset;
-            Invoke("StartTutorial", timeToNextCue);
+            nextCueTime = Time.time + subtitleCues[cuePosition].length + subtitleCues[cuePosition + 1].offset;
+        } else {
+            tutorialRunning = false;
         }
     }
 
@@ -110,13 +133,6 @@ public class TutorialManager : MonoBehaviour {
         Debug.Log("Invoking action " + action.ToString());
 
         switch (action) {
-            // Gives a laser pointer to the user.
-            case ScenarioCueAction.GiveLaser:
-                GameObject rightController = GameObject.Find("Controller (right)");
-                GameObject laserPointer = Instantiate<GameObject>(laserPointerPrefab);
-                laserPointer.transform.parent = rightController.transform;
-                break;
-
             // Ends the tutorial and goes to the launcher library.
             case ScenarioCueAction.GotoLibrary:
                 ExitTutorial();
@@ -145,6 +161,23 @@ public class TutorialManager : MonoBehaviour {
                 FadeInFadeOut stFaderB = GameObject.Find("SkippableText").GetComponent<FadeInFadeOut>();
                 stFaderB.Hide();
                 break;
+
+            case ScenarioCueAction.WaitForUserRaise:
+                pauseUntil = areControllersRaised;
+                break;
+               
+            // Gives a laser pointer to the user.
+            case ScenarioCueAction.GiveLaser:
+                GameObject laserPointer = Instantiate<GameObject>(laserPointerPrefab);
+                laserPointer.transform.parent = rightController.transform;
+                break;
         }
+    }
+
+    private bool areControllersRaised() {
+        float expectedHeight = head.transform.position.y * raiseThreshold;
+
+        return leftController.transform.position.y >= expectedHeight &&
+            rightController.transform.position.y >= expectedHeight;
     }
 }
