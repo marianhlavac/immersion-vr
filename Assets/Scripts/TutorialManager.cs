@@ -40,6 +40,16 @@ public class TutorialManager : MonoBehaviour {
         subtitleCues = StxtReader.ReadFromString(subtitleTextFile.text);
 
         StartTutorial();
+
+        // Skip tutorial by command args
+        string[] args = System.Environment.GetCommandLineArgs();
+
+        foreach (string arg in args) {
+            if (arg == "-launcher") {
+                ExitTutorial();
+                Debug.Log("Going straight to the launcher.");
+            }
+        }
     }
 	
 	void Update () {
