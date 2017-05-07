@@ -44,9 +44,12 @@ public class TutorialManager : MonoBehaviour {
         phase = startingPhase;
 
         GameObject vrRig = GameObject.Find("SteamVRRig");
-        leftController = vrRig.transform.Find("LeftController").gameObject;
-        rightController = vrRig.transform.Find("RightController").gameObject;
+        leftController = vrRig.transform.Find("Controller (left)").gameObject;
+        rightController = vrRig.transform.Find("Controller (right)").gameObject;
         head = vrRig.transform.Find("Camera (eye)").gameObject;
+
+		Player
+		Valve.VR.InteractionSystem.ControllerButtonHints.ShowButtonHint(Valve.VR.InteractionSystem.Hand.
 
         rig = GameObject.Find("TutorialRig");
 
@@ -172,14 +175,14 @@ public class TutorialManager : MonoBehaviour {
                 break;
                
             // Gives a laser pointer to the user.
-            case ScenarioCueAction.GiveLaser:
-                GameObject laserPointer = Instantiate<GameObject>(laserPointerPrefab);
-                laserPointer.transform.parent = rightController.transform;
-
+			case ScenarioCueAction.GiveLaser:
+				GameObject laserPointer = Instantiate<GameObject> (laserPointerPrefab);
+				laserPointer.GetComponent<LaserPointer> ().beamSource = rightController;
 
                 GameObject target = Instantiate<GameObject>(targetPrefab);
                 target.transform.parent = rig.transform;
                 break;
+
         }
     }
 

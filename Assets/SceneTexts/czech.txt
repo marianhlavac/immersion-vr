@@ -1,5 +1,5 @@
 #intro
-1;0;0:%showlogo
+5;0;0:%showlogo
 2;2.4;0:Vítejte v herně Virtualnirealita.cz!
 0;3.6;0:Tato krátká výuka vás provede vstupem do virtuální reality.
 0;0;0:%hidelogo
