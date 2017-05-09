@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using Valve.VR;
+using Valve.VR.InteractionSystem;
 
 public enum TutorialPhase {
     NotRunning,
@@ -22,12 +24,17 @@ public class TutorialManager : MonoBehaviour {
     public AudioClip[] audioCues;
     public TextAsset subtitleTextFile = null;
     public float raiseThreshold = 0.75f;
+
+    [Header("Links")]
     public GameObject leftTrackedController;
     public GameObject rightTrackedController;
     public GameObject head;
     public GameObject rig;
-
+    public GameObject leftHand;
+    public GameObject rightHand;
     public GameObject subtitlesObject;
+
+    [Header("Prefabs")]
     public GameObject laserPointerPrefab;
     public GameObject launcherRigPrefab;
     public GameObject targetPrefab;
@@ -59,6 +66,8 @@ public class TutorialManager : MonoBehaviour {
                 Debug.Log("Going straight to the launcher.");
             }
         }
+
+        hideAllHints();
     }
 	
 	void Update () {
@@ -173,7 +182,37 @@ public class TutorialManager : MonoBehaviour {
                 target.transform.parent = rig.transform;
                 break;
 
+            case ScenarioCueAction.HighlightMenu:
+                highlightButtonOnBothControllers(EVRButtonId.k_EButton_ApplicationMenu, "Menu");
+                break;
+
+            case ScenarioCueAction.HighlightSide:
+                highlightButtonOnBothControllers(EVRButtonId.k_EButton_Grip, "Boční tlačítko");
+                break;
+
+            case ScenarioCueAction.HighlightSystem:
+                highlightButtonOnBothControllers(EVRButtonId.k_EButton_System, "Systém");
+                break;
+
+            case ScenarioCueAction.HighlightTouchpad:
+                highlightButtonOnBothControllers(EVRButtonId.k_EButton_SteamVR_Touchpad, "Dotyková plocha");
+                break;
+
+            case ScenarioCueAction.HighlightTrigger:
+                highlightButtonOnBothControllers(EVRButtonId.k_EButton_SteamVR_Trigger, "Spoušť");
+                break;
         }
+    }
+
+    private void hideAllHints() {
+        ControllerButtonHints.HideAllTextHints(leftHand.GetComponent<Hand>());
+        ControllerButtonHints.HideAllTextHints(rightHand.GetComponent<Hand>());
+    }
+
+    private void highlightButtonOnBothControllers(EVRButtonId button, string text) {
+        hideAllHints();
+        ControllerButtonHints.ShowTextHint(leftHand.GetComponent<Hand>(), button, text);
+        ControllerButtonHints.ShowTextHint(rightHand.GetComponent<Hand>(), button, text);
     }
 
     private bool areControllersRaised() {
