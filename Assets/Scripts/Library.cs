@@ -40,6 +40,14 @@ public class Library : MonoBehaviour {
             }
         }
     }
+
+    public void HideAllDetails() {
+        GameBanner[] banners = GameObject.FindObjectsOfType<GameBanner>();
+
+        foreach(GameBanner banner in banners) {
+            banner.HideDetail();
+        }
+    }
 	
 	void Update () {
 		

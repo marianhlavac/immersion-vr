@@ -7,6 +7,9 @@ public class GameBanner : MonoBehaviour {
     public float appearanceDelay = 0f;
     public float appearanceDuration = 1f;
     public GameObject detailRig;
+    public GameObject library;
+    public GameObject playButton;
+    public GameObject closeButton;
 
     private Vector3 defaultPosition;
     private Vector3 defaultRotation;
@@ -53,6 +56,15 @@ public class GameBanner : MonoBehaviour {
             OnNoHover();
         }
 
+        if (laserPointer.pointingAt == closeButton && laserPointer.isBeaming) {
+            HideDetail();
+        }
+
+        if (laserPointer.pointingAt == playButton && laserPointer.isBeaming) {
+            HideDetail();
+            Application.OpenURL("steam://run/450390");
+        }
+
         positionOffset += (positionOffsetTarget - positionOffset) / 4.0f;
         detailScale += (detailScaleTarget - detailScale) / 4.0f;
 
@@ -68,6 +80,8 @@ public class GameBanner : MonoBehaviour {
     }
 
     public void ShowDetail() {
+        Library lib = library.GetComponent<Library>();
+        lib.HideAllDetails();
         detailScaleTarget = Vector3.one;
     }
 
