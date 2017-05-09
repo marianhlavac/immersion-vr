@@ -11,6 +11,8 @@ public class GameBanner : MonoBehaviour {
     public GameObject playButton;
     public GameObject closeButton;
 
+    public GameItem game;
+
     private Vector3 defaultPosition;
     private Vector3 defaultRotation;
     private Vector3 shakeSeeds;
@@ -62,7 +64,7 @@ public class GameBanner : MonoBehaviour {
 
         if (laserPointer.pointingAt == playButton && laserPointer.isBeaming) {
             HideDetail();
-            Application.OpenURL("steam://run/450390");
+            game.RunGame();
         }
 
         positionOffset += (positionOffsetTarget - positionOffset) / 4.0f;

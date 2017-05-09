@@ -48,6 +48,10 @@ public class Library : MonoBehaviour {
             banner.HideDetail();
         }
     }
+
+    public void SetGamesSource(GameItem[] games) {
+
+    }
 	
 	void Update () {
 		
