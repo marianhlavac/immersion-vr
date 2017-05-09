@@ -22,6 +22,10 @@ public class TutorialManager : MonoBehaviour {
     public AudioClip[] audioCues;
     public TextAsset subtitleTextFile = null;
     public float raiseThreshold = 0.75f;
+    public GameObject leftTrackedController;
+    public GameObject rightTrackedController;
+    public GameObject head;
+    public GameObject rig;
 
     public GameObject subtitlesObject;
     public GameObject laserPointerPrefab;
@@ -35,23 +39,9 @@ public class TutorialManager : MonoBehaviour {
     private Func<bool> pauseUntil = null;
     private bool tutorialRunning = false;
     private float nextCueTime = 0;
-    private GameObject leftController;
-    private GameObject rightController;
-    private GameObject head;
-    private GameObject rig;
 
     void Start () {
         phase = startingPhase;
-
-        GameObject vrRig = GameObject.Find("SteamVRRig");
-        leftController = vrRig.transform.Find("Controller (left)").gameObject;
-        rightController = vrRig.transform.Find("Controller (right)").gameObject;
-        head = vrRig.transform.Find("Camera (eye)").gameObject;
-
-		Player
-		Valve.VR.InteractionSystem.ControllerButtonHints.ShowButtonHint(Valve.VR.InteractionSystem.Hand.
-
-        rig = GameObject.Find("TutorialRig");
 
         if (subtitleTextFile == null) {
             throw new Exception("Subtitle Text File hasn't been specified.");
@@ -177,7 +167,7 @@ public class TutorialManager : MonoBehaviour {
             // Gives a laser pointer to the user.
 			case ScenarioCueAction.GiveLaser:
 				GameObject laserPointer = Instantiate<GameObject> (laserPointerPrefab);
-				laserPointer.GetComponent<LaserPointer> ().beamSource = rightController;
+				laserPointer.GetComponent<LaserPointer> ().beamSource = rightTrackedController;
 
                 GameObject target = Instantiate<GameObject>(targetPrefab);
                 target.transform.parent = rig.transform;
@@ -189,7 +179,7 @@ public class TutorialManager : MonoBehaviour {
     private bool areControllersRaised() {
         float expectedHeight = head.transform.position.y * raiseThreshold;
 
-        return leftController.transform.position.y >= expectedHeight &&
-            rightController.transform.position.y >= expectedHeight;
+        return leftTrackedController.transform.position.y >= expectedHeight &&
+            rightTrackedController.transform.position.y >= expectedHeight;
     }
 }
