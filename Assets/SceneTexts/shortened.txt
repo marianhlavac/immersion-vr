@@ -1,8 +1,4 @@
-﻿
-#controllers1
-0;4.9;5:Toto jsou ovladače systému HTC Vive.\nNyní vám představíme tlačítka těchto ovladačů.
-
-#controllers2
+﻿#controllers2
 1;0;6:%highlighttrigger
 0;5;6:Toto je tlačítko spouště.\nSlouží ve hrách většinou pro výstřel, nebo pro výběr položky v menu.
 0;0;6:%givelaser

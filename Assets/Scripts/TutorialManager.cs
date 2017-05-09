@@ -46,6 +46,8 @@ public class TutorialManager : MonoBehaviour {
     private Func<bool> pauseUntil = null;
     private bool tutorialRunning = false;
     private float nextCueTime = 0;
+    private LaserPointer laserPointer = null;
+    private GameObject targetInstance = null;
 
     void Start () {
         phase = startingPhase;
@@ -168,18 +170,15 @@ public class TutorialManager : MonoBehaviour {
                 FadeInFadeOut stFaderB = GameObject.Find("SkippableText").GetComponent<FadeInFadeOut>();
                 stFaderB.Hide();
                 break;
-
-            case ScenarioCueAction.WaitForUserRaise:
-                pauseUntil = areControllersRaised;
-                break;
                
             // Gives a laser pointer to the user.
 			case ScenarioCueAction.GiveLaser:
-				GameObject laserPointer = Instantiate<GameObject> (laserPointerPrefab);
-				laserPointer.GetComponent<LaserPointer> ().beamSource = rightTrackedController;
+				GameObject laserPointerObject = Instantiate<GameObject> (laserPointerPrefab);
+                laserPointer = laserPointerObject.GetComponent<LaserPointer>();
+                laserPointer.beamSource = rightTrackedController;
 
-                GameObject target = Instantiate<GameObject>(targetPrefab);
-                target.transform.parent = rig.transform;
+                targetInstance = Instantiate<GameObject>(targetPrefab);
+                targetInstance.transform.parent = rig.transform;
                 break;
 
             case ScenarioCueAction.HighlightMenu:
@@ -187,6 +186,7 @@ public class TutorialManager : MonoBehaviour {
                 break;
 
             case ScenarioCueAction.HighlightSide:
+                Destroy(targetInstance, 3);
                 highlightButtonOnBothControllers(EVRButtonId.k_EButton_Grip, "Boční tlačítko");
                 break;
 
@@ -200,6 +200,25 @@ public class TutorialManager : MonoBehaviour {
 
             case ScenarioCueAction.HighlightTrigger:
                 highlightButtonOnBothControllers(EVRButtonId.k_EButton_SteamVR_Trigger, "Spoušť");
+                break;
+
+            case ScenarioCueAction.Skip:
+                break;
+
+            case ScenarioCueAction.WaitForUserRaise:
+                pauseUntil = areControllersRaised;
+                break;
+
+            case ScenarioCueAction.WaitForUserTargetHit:
+                pauseUntil = isTargetHit;
+                break;
+
+            case ScenarioCueAction.WaitForSide:
+                pauseUntil = isSidePressed;
+                break;
+
+            case ScenarioCueAction.WaitForUserColor:
+                pauseUntil = isColorSelected;
                 break;
         }
     }
@@ -220,5 +239,23 @@ public class TutorialManager : MonoBehaviour {
 
         return leftTrackedController.transform.position.y >= expectedHeight &&
             rightTrackedController.transform.position.y >= expectedHeight;
+    }
+
+    private bool isTargetHit() {
+        return laserPointer.isBeaming && laserPointer.pointingAt == targetInstance.gameObject;
+    }
+
+    private bool isSidePressed() {
+        SteamVR_TrackedController leftTrackedItem = leftTrackedController.GetComponent<SteamVR_TrackedController>();
+        SteamVR_TrackedController rightTrackedItem = leftTrackedController.GetComponent<SteamVR_TrackedController>();
+
+        return leftTrackedItem.gripped || rightTrackedItem.gripped;
+    }
+
+    private bool isColorSelected() {
+        SteamVR_TrackedController leftTrackedItem = leftTrackedController.GetComponent<SteamVR_TrackedController>();
+        SteamVR_TrackedController rightTrackedItem = leftTrackedController.GetComponent<SteamVR_TrackedController>();
+
+        return leftTrackedItem.padPressed || rightTrackedItem.padPressed;
     }
 }
