@@ -79,20 +79,26 @@ public class FadeInFadeOut : MonoBehaviour {
 
     void ApplyAlphaOnTextMesh(float alpha) {
         TextMesh textMesh = GetComponent<TextMesh>();
-        textMesh.color = new Color(
+
+        if (textMesh != null) {
+            textMesh.color = new Color(
             textMesh.color.r,
             textMesh.color.g,
             textMesh.color.b,
             alpha);
+        }
     }
 
     void ApplyAlphaOnMaterial(float alpha) {
         Renderer renderer = GetComponent<Renderer>();
-        renderer.material.color = new Color(
-            renderer.material.color.r,
-            renderer.material.color.g,
-            renderer.material.color.b,
-            alpha);
+
+        if (renderer.material != null && renderer.material.color != null) {
+            renderer.material.color = new Color(
+                renderer.material.color.r,
+                renderer.material.color.g,
+                renderer.material.color.b,
+                alpha);
+        }
     }
 }
  

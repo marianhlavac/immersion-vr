@@ -61,7 +61,7 @@ public class TutorialManager : MonoBehaviour {
         tutorialRunning = true;
 
         // Skip tutorial by command args
-        string[] args = System.Environment.GetCommandLineArgs();
+        string[] args = Environment.GetCommandLineArgs();
 
         foreach (string arg in args) {
             if (arg == "-launcher") {
@@ -74,8 +74,9 @@ public class TutorialManager : MonoBehaviour {
     }
 	
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.F1)) {
-            ExitTutorial();
+        if (Input.GetKeyDown(KeyCode.F1) /* || fakin combination press */) {
+            InvokeCueAction(ScenarioCueAction.GotoLibrary);
+            InvokeCueAction(ScenarioCueAction.Skip);
         }
 
         if (pauseUntil != null) {
@@ -96,6 +97,7 @@ public class TutorialManager : MonoBehaviour {
             nextCueTime = Time.time + subtitleCues[cuePosition].length + subtitleCues[cuePosition + 1].offset;
         } else {
             tutorialRunning = false;
+            ExitTutorialAfter(5f);
         }
     }
 
@@ -105,11 +107,17 @@ public class TutorialManager : MonoBehaviour {
         }
     }
 
+    public void ExitTutorialAfter(float time) {
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Tutorial")) {
+            Destroy(obj, time);
+        }
+    }
+
     private void PlayCue(ScenarioCue cue) {
         if (cue.isAction) {
             InvokeCueAction(cue.action);
         } else {
-            DisplayCue("[" + cue.absoluteOffset.ToString() + "] " + cue.text);
+            DisplayCue(cue.text);
 
             if (currentAudioCue != cue.audioCueIdx) {
                 PlayAudioCue((int)cue.audioCueIdx);
@@ -147,6 +155,9 @@ public class TutorialManager : MonoBehaviour {
             case ScenarioCueAction.GotoLibrary:
                 if (!laserGiven) GiveLaser();
                 Instantiate(launcherRigPrefab);
+
+                subtitlesObject.transform.localPosition = new Vector3(8.3f, 9.4f, -14);
+                subtitlesObject.transform.localEulerAngles = new Vector3(18, 0, 0);
                 break;
 
             // Shows arcade logo
@@ -203,6 +214,11 @@ public class TutorialManager : MonoBehaviour {
                 break;
 
             case ScenarioCueAction.Skip:
+                FadeInFadeOut logoFaderC = GameObject.Find("ArcadeLogo").GetComponent<FadeInFadeOut>();
+                logoFaderC.Hide();
+                FadeInFadeOut stFaderC = GameObject.Find("SkippableText").GetComponent<FadeInFadeOut>();
+                stFaderC.Hide();
+                ExitTutorial();
                 break;
 
             case ScenarioCueAction.WaitForUserRaise:

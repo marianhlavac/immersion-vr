@@ -1,34 +1,7 @@
-﻿#controllers2
-1;0;6:%highlighttrigger
-0;5;6:Toto je tlačítko spouště.\nSlouží ve hrách většinou pro výstřel, nebo pro výběr položky v menu.
-0;0;6:%givelaser
-0;4;6:Namiřte laserové ukazovátko na terč a stiskněte spoušť.
-0;0;6:%waitforusertargethit
-
-#controllers3
-0;0;7:%highlightside
-0;4.5;7:Perfektní! Toto je boční tlačítko, které lze stisknout z libovolné strany.
-0;5.3;7:Slouží jako alternativní funkce, například pro přebíjení zbraně. Stiskněte jej.
-0;0;7:%waitforside
-
-#controllers4
-0;0;8:%highlighttouchpad
-0;5.7;8:Dobře. Toto je dotyková část ovladače. Můžete po ní přejíždět prstem a také ji stisknout.
-0;6.3;8:Přejížděním prstu vyberte barvu svého laserového ukazovátka a stisknutím dotykové plochy ji potvrdíte.
-0;0;8:%waitforusercolor
-
-#controllers5
-0;4.3;9:Skvěle! Zbývají nám poslední dvě tlačítka. Menu a systém.
-0;0;9:%highlightmenu
-0;6.7;9:Menu tlačítko slouží většinou k vyvolání nabídky ve hře.\nČasto můžete tímto tlačítkem také pozastavit hru.
-0;0;9:%highlightsystem
-0;4.4;9:Systémové tlačítko pak otevírá rozhraní aplikace Steam. 
-0;5;9:Pokud jste s platformou Steam seznámeni,\nmůžete toto tlačítko používat pro procházení knihovny.
-0;3.87;9:Stejným tlačítkem toto rozhraní můžete zavřít.
-
+﻿
 #outro
 2;3.5;10:Nyní jste připraveni na svůj první zážitek ve virtuální realitě.
 0;0;10:%gotolibrary
-2;3.5;10:Před sebou vidíte knihovnu dostupných aplikací naší herny.
+0;3.5;10:Před sebou vidíte knihovnu dostupných aplikací naší herny.
 0;4.7;10:Vyberte si, o kterou máte zájem, namiřte na ní a stiskněte spoušť.
 

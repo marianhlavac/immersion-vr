@@ -56,6 +56,6 @@
 #outro
 2;3.5;10:Nyní jste připraveni na svůj první zážitek ve virtuální realitě.
 0;0;10:%gotolibrary
-2;3.5;10:Před sebou vidíte knihovnu dostupných aplikací naší herny.
+0;3.5;10:Před sebou vidíte knihovnu dostupných aplikací naší herny.
 0;4.7;10:Vyberte si, o kterou máte zájem, namiřte na ní a stiskněte spoušť.
 

@@ -51,6 +51,9 @@ public class LaserPointer : MonoBehaviour {
         line.material.SetColor("_Color", color);
         line.material.SetColor("_EmissionColor", color);
         line.SetWidth(size, size * 0.85f);
+
+        // for debugging purposes
+        isBeaming = Input.GetMouseButton(0);
     }
 
     private Color CalculateColor(float x, float y, float alpha) {
