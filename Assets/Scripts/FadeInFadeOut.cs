@@ -5,8 +5,10 @@ using UnityEngine;
 public class FadeInFadeOut : MonoBehaviour {
     public float timeTransition;
     public float moveOffset = 5;
+    public float timeOffset = 0;
     public bool isTextTransition = false;
     public bool selfDestructAfterEnd = true;
+    public bool autoStart = false;
 
     private float smoothness = 0.1f;
     private float defaultZ = 0;
@@ -23,18 +25,22 @@ public class FadeInFadeOut : MonoBehaviour {
         else {
             ApplyAlphaOnMaterial(0);
         }
+
+        if (autoStart) {
+            Show();
+        }
     }
 
     public void Show() {
         appearing = true;
-        started = Time.time;
+        started = Time.time - timeOffset;
         isActive = true;
     }
 
     public void Hide() {
         appearing = false;
         isActive = true;
-        started = Time.time;
+        started = Time.time - timeOffset;
     }
 	
 	void Update () {

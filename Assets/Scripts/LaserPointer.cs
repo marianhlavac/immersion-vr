@@ -58,7 +58,6 @@ public class LaserPointer : MonoBehaviour {
         float hue = Mathf.Abs(angle / Mathf.PI);
 
         float intensity = 1 - Mathf.Clamp01(new Vector2(x, y).magnitude);
-        Debug.Log(intensity);
 
         float r = Mathf.Clamp01(1 - 2 * hue + intensity);
         float g = Mathf.Clamp01(-Mathf.Abs(2 * hue - 1) + 1 + intensity);

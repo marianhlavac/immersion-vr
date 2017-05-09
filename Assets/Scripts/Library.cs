@@ -34,6 +34,10 @@ public class Library : MonoBehaviour {
                 banner.transform.position = position;
                 banner.transform.parent = this.transform;
                 banner.transform.Rotate(new Vector3(0, Mathf.Rad2Deg * angle, 0));
+
+                GameBanner gameBanner = banner.GetComponent<GameBanner>();
+                Debug.Log((banner.transform.position - transform.position).magnitude);
+                gameBanner.appearanceDelay = (banner.transform.position - new Vector3(0, 0, 8)).magnitude * 0.25f;
             }
         }
     }

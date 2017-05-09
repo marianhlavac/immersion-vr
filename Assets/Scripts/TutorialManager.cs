@@ -48,6 +48,7 @@ public class TutorialManager : MonoBehaviour {
     private float nextCueTime = 0;
     private LaserPointer laserPointer = null;
     private GameObject targetInstance = null;
+    private bool laserGiven = false;
 
     void Start () {
         phase = startingPhase;
@@ -144,6 +145,7 @@ public class TutorialManager : MonoBehaviour {
         switch (action) {
             // Ends the tutorial and goes to the launcher library.
             case ScenarioCueAction.GotoLibrary:
+                if (!laserGiven) GiveLaser();
                 Instantiate(launcherRigPrefab);
                 break;
 
@@ -173,9 +175,7 @@ public class TutorialManager : MonoBehaviour {
                
             // Gives a laser pointer to the user.
 			case ScenarioCueAction.GiveLaser:
-				GameObject laserPointerObject = Instantiate<GameObject> (laserPointerPrefab);
-                laserPointer = laserPointerObject.GetComponent<LaserPointer>();
-                laserPointer.beamSource = rightTrackedController;
+                GiveLaser();
 
                 targetInstance = Instantiate<GameObject>(targetPrefab);
                 targetInstance.transform.parent = rig.transform;
@@ -221,6 +221,13 @@ public class TutorialManager : MonoBehaviour {
                 pauseUntil = isColorSelected;
                 break;
         }
+    }
+
+    private void GiveLaser() {
+        GameObject laserPointerObject = Instantiate<GameObject>(laserPointerPrefab);
+        laserPointer = laserPointerObject.GetComponent<LaserPointer>();
+        laserPointer.beamSource = rightTrackedController;
+        laserGiven = true;
     }
 
     private void hideAllHints() {
