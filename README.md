@@ -2,8 +2,6 @@
 
 My bachelor's thesis at FIT CTU.
 
-**Warning! Nasty and awful WIP ahead, watch your step.**
-
 ## Screenshot
 
 Current state of development.
